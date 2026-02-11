@@ -4,85 +4,357 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gerador de Script</title>
+
   <style>
-    body {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
-      background: #111;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a0a, #111, #0a0a0a);
       color: white;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 750px;
+      background: rgba(20, 20, 20, 0.95);
+      border: 1px solid rgba(0, 255, 0, 0.2);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0px 0px 20px rgba(0, 255, 0, 0.2);
     }
 
     h1 {
       text-align: center;
       color: lime;
+      margin-bottom: 20px;
+      font-size: 28px;
     }
 
-    input, textarea, button {
+    label {
+      font-size: 15px;
+      margin-top: 15px;
+      display: block;
+      color: #ddd;
+    }
+
+    input, textarea {
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #0f0f0f;
+      color: white;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
     }
 
-    button {
-      background: lime;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: rgb(0, 200, 0);
+    input:focus, textarea:focus {
+      border-color: lime;
+      box-shadow: 0px 0px 10px rgba(0,255,0,0.3);
     }
 
     textarea {
-      height: 200px;
+      height: 260px;
       resize: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+      transition: 0.2s;
+      margin-top: 12px;
+    }
+
+    .btn-gerar {
+      background: lime;
+      color: black;
+    }
+
+    .btn-gerar:hover {
+      background: rgb(0, 200, 0);
+    }
+
+    .btn-copiar {
+      background: #222;
+      color: lime;
+      border: 1px solid lime;
+    }
+
+    .btn-copiar:hover {
+      background: lime;
+      color: black;
+    }
+
+    .btn-limpar {
+      background: #222;
+      color: red;
+      border: 1px solid red;
+    }
+
+    .btn-limpar:hover {
+      background: red;
+      color: white;
+    }
+
+    .btn-add {
+      background: #222;
+      color: cyan;
+      border: 1px solid cyan;
+    }
+
+    .btn-add:hover {
+      background: cyan;
+      color: black;
+    }
+
+    .msg {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    footer {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    .funcoes {
+      margin-top: 15px;
+      padding: 15px;
+      border: 1px solid rgba(0,255,0,0.2);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.4);
+    }
+
+    .funcoes h2 {
+      color: lime;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .funcao-item {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .funcao-item input {
+      flex: 1;
+      margin-top: 0;
+    }
+
+    .btn-remover {
+      width: 80px;
+      background: red;
+      color: white;
+      font-weight: bold;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-remover:hover {
+      background: darkred;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>Gerador de Script GG</h1>
+  <div class="container">
 
-  <label>Nome do Script:</label>
-  <input type="text" id="nomeScript" placeholder="Ex: Script do Kauan">
+    <h1>⚡ Gerador de Script</h1>
 
-  <label>Texto que vai aparecer no início:</label>
-  <input type="text" id="msgInicio" placeholder="Ex: Bem-vindo ao script!">
+    <label>Nome do Script:</label>
+    <input type="text" id="nomeScript" placeholder="Ex: Script do Kauan">
 
-  <button onclick="gerarScript()">GERAR SCRIPT</button>
+    <label>Mensagem inicial (toast + print):</label>
+    <input type="text" id="msgInicio" placeholder="Ex: Bem-vindo ao script!">
 
-  <h2>Resultado:</h2>
-  <textarea id="resultado" readonly></textarea>
+    <div class="funcoes">
+      <h2>📌 Funções do Script</h2>
 
-  <button onclick="copiar()">COPIAR SCRIPT</button>
+      <div id="listaFuncoes"></div>
+
+      <button class="btn-add" onclick="adicionarFuncao()">➕ Adicionar Função</button>
+    </div>
+
+    <button class="btn-gerar" onclick="gerarScript()">GERAR SCRIPT</button>
+    <button class="btn-limpar" onclick="limpar()">LIMPAR</button>
+
+    <label>Resultado:</label>
+    <textarea id="resultado" readonly></textarea>
+
+    <button class="btn-copiar" onclick="copiar()">📋 COPIAR SCRIPT</button>
+
+    <p class="msg" id="status">Adicione funções e gere seu script.</p>
+
+    <footer>Feito por Kauan • Gerador Script</footer>
+
+  </div>
 
   <script>
+    let contadorFuncoes = 0;
+
+    function adicionarFuncao() {
+      contadorFuncoes++;
+
+      let div = document.createElement("div");
+      div.className = "funcao-item";
+      div.id = "funcaoItem" + contadorFuncoes;
+
+      div.innerHTML = `
+        <input type="text" id="funcao${contadorFuncoes}" placeholder="Nome da Função ${contadorFuncoes} (Ex: Teleporte)">
+        <button class="btn-remover" onclick="removerFuncao(${contadorFuncoes})">X</button>
+      `;
+
+      document.getElementById("listaFuncoes").appendChild(div);
+
+      document.getElementById("status").innerHTML = "✅ Função adicionada!";
+      document.getElementById("status").style.color = "cyan";
+    }
+
+    function removerFuncao(id) {
+      let item = document.getElementById("funcaoItem" + id);
+      if (item) item.remove();
+
+      document.getElementById("status").innerHTML = "❌ Função removida!";
+      document.getElementById("status").style.color = "red";
+    }
+
     function gerarScript() {
-      let nome = document.getElementById("nomeScript").value;
-      let msg = document.getElementById("msgInicio").value;
+      let nome = document.getElementById("nomeScript").value.trim();
+      let msg = document.getElementById("msgInicio").value.trim();
+
+      if (nome === "" || msg === "") {
+        document.getElementById("status").innerHTML = "⚠️ Preencha o nome do script e a mensagem!";
+        document.getElementById("status").style.color = "yellow";
+        return;
+      }
+
+      let funcoes = [];
+      for (let i = 1; i <= contadorFuncoes; i++) {
+        let campo = document.getElementById("funcao" + i);
+        if (campo) {
+          let nomeFuncao = campo.value.trim();
+          if (nomeFuncao === "") nomeFuncao = "Funcao_" + i;
+          funcoes.push(nomeFuncao);
+        }
+      }
+
+      if (funcoes.length === 0) {
+        document.getElementById("status").innerHTML = "⚠️ Adicione pelo menos 1 função!";
+        document.getElementById("status").style.color = "yellow";
+        return;
+      }
 
       let scriptFinal = `-- ${nome}
+-- Script gerado automaticamente
+-- By Isaac
+
 gg.toast("${msg}")
 print("${msg}")
 
--- Script gerado automaticamente
+`;
+
+      // Criar funções
+      funcoes.forEach((f, index) => {
+        let nomeFormatado = f.replace(/\s+/g, "_");
+
+        scriptFinal += `
+function ${nomeFormatado}()
+  gg.alert("Função: ${f} ainda não configurada!")
+end
+`;
+      });
+
+      // Criar menu
+      scriptFinal += `
+function MENU()
+  local menu = gg.choice({
+`;
+
+      funcoes.forEach((f, index) => {
+        scriptFinal += `    "${index + 1}. ${f}",\n`;
+      });
+
+      scriptFinal += `    "❌ Sair"
+  }, nil, "📌 MENU DO SCRIPT")
+
+  if menu == nil then return end
+`;
+
+      funcoes.forEach((f, index) => {
+        let nomeFormatado = f.replace(/\s+/g, "_");
+        scriptFinal += `  if menu == ${index + 1} then ${nomeFormatado}() end\n`;
+      });
+
+      scriptFinal += `
+  if menu == ${funcoes.length + 1} then os.exit() end
+end
+
+while true do
+  if gg.isVisible(true) then
+    gg.setVisible(false)
+    MENU()
+  end
+end
 `;
 
       document.getElementById("resultado").value = scriptFinal;
+
+      document.getElementById("status").innerHTML = "✅ Script gerado com sucesso!";
+      document.getElementById("status").style.color = "lime";
     }
 
     function copiar() {
-      let texto = document.getElementById("resultado");
-      texto.select();
-      document.execCommand("copy");
-      alert("Script copiado!");
+      let texto = document.getElementById("resultado").value;
+
+      if (texto.trim() === "") {
+        document.getElementById("status").innerHTML = "⚠️ Gere o script antes de copiar!";
+        document.getElementById("status").style.color = "yellow";
+        return;
+      }
+
+      navigator.clipboard.writeText(texto);
+      document.getElementById("status").innerHTML = "📋 Script copiado!";
+      document.getElementById("status").style.color = "lime";
     }
+
+    function limpar() {
+      document.getElementById("nomeScript").value = "";
+      document.getElementById("msgInicio").value = "";
+      document.getElementById("resultado").value = "";
+      document.getElementById("listaFuncoes").innerHTML = "";
+      contadorFuncoes = 0;
+
+      document.getElementById("status").innerHTML = "🧹 Tudo limpo!";
+      document.getElementById("status").style.color = "red";
+    }
+
+    // Já começa com 1 função criada
+    adicionarFuncao();
   </script>
 
 </body>
-  </html>
-  
+</html>
