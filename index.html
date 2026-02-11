@@ -1,87 +1,60 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de Script</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-      color: lime;
-    }
-
-    input, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border-radius: 8px;
-      border: none;
-      font-size: 16px;
-    }
-
-    button {
-      background: lime;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    button:hover {
-      background: rgb(0, 200, 0);
-    }
-
-    textarea {
-      height: 200px;
-      resize: none;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>0</title>
+<style>
+body{font-family:monospace;background:#000;color:#0f0;margin:0;padding:16px}
+h1{text-align:center;color:#0f0}
+label{display:block;margin:12px 0 4px}
+input,button,textarea{width:100%;padding:10px;margin:8px 0;border:none;border-radius:4px;font-size:16px;box-sizing:border-box}
+button{background:#0f0;color:#000;font-weight:bold;cursor:pointer}
+button:hover{background:#0c0}
+textarea{height:220px;background:#111;color:#0f0;resize:none}
+</style>
 </head>
-
 <body>
 
-  <h1>Gerador de Script GG</h1>
+<div id="0"></div>
+<label id="1"></label>
+<input id="2" placeholder="">
+<label id="3"></label>
+<input id="4" placeholder="">
+<button id="5">0</button>
+<div id="6"></div>
+<textarea id="7" readonly></textarea>
+<button id="8">0</button>
 
-  <label>Nome do Script:</label>
-  <input type="text" id="nomeScript" placeholder="Ex: Script do Kauan">
-
-  <label>Texto que vai aparecer no início:</label>
-  <input type="text" id="msgInicio" placeholder="Ex: Bem-vindo ao script!">
-
-  <button onclick="gerarScript()">GERAR SCRIPT</button>
-
-  <h2>Resultado:</h2>
-  <textarea id="resultado" readonly></textarea>
-
-  <button onclick="copiar()">COPIAR SCRIPT</button>
-
-  <script>
-    function gerarScript() {
-      let nome = document.getElementById("nomeScript").value;
-      let msg = document.getElementById("msgInicio").value;
-
-      let scriptFinal = `-- ${nome}
-gg.toast("${msg}")
-print("${msg}")
-
--- Script gerado automaticamente
-`;
-
-      document.getElementById("resultado").value = scriptFinal;
-    }
-
-    function copiar() {
-      let texto = document.getElementById("resultado");
-      texto.select();
-      document.execCommand("copy");
-      alert("Script copiado!");
-    }
-  </script>
-
+<script>
+(function(){
+const _0=[2,4,7,5,8,0,1,3,6];
+const _1=s=>{let r='';for(let i=0;i<s.length;i++){r+=String.fromCharCode(s.charCodeAt(i)^7);}return r;};
+const _2=document.getElementById;
+const _3=()=>{let n=_2(_0[0]).value||'0';let m=_2(_0[1]).value||'0';
+let s=`-- \( {n}\ngg.toast(" \){m}")\nprint("${m}")\n\n-- 0`;
+_2(_0[2]).innerHTML=s;};
+const _4=()=>{let t=_2(_0[2]);t.select();document.execCommand('copy');alert(_1('\x48\x4f\x4e\x4a\x4f\x4f\x4e\x49\x4f\x4e\x4a\x4f\x48'))};
+const _5=()=>{const x={0:_1('\x4a\x45\x52\x41\x44\x4f\x52\x20\x44\x45\x20\x53\x43\x52\x49\x50\x54\x20\x47\x47'),
+1:_1('\x4e\x4f\x4d\x45\x20\x44\x4f\x20\x53\x43\x52\x49\x50\x54\x3a'),
+2:_1('\x45\x78\x3a\x20\x53\x43\x52\x49\x50\x54\x20\x44\x4f\x20\x4b\x41\x55\x41\x4e'),
+3:_1('\x54\x45\x58\x54\x4f\x20\x51\x55\x45\x20\x56\x41\x49\x20\x41\x50\x41\x52\x45\x43\x45\x52\x20\x4e\x4f\x20\x49\x4e\x49\x43\x49\x4f\x3a'),
+4:_1('\x45\x78\x3a\x20\x42\x45\x4d\x2d\x56\x49\x4e\x44\x4f\x20\x41\x4f\x20\x53\x43\x52\x49\x50\x54\x21'),
+5:_1('\x47\x45\x52\x41\x52\x20\x53\x43\x52\x49\x50\x54'),
+6:_1('\x52\x45\x53\x55\x4c\x54\x41\x44\x4f\x3a'),
+8:_1('\x43\x4f\x50\x49\x41\x52\x20\x53\x43\x52\x49\x50\x54')};
+_2('0').innerHTML=x[0];
+_2('1').innerHTML=x[1];
+_2('2').placeholder=x[2];
+_2('3').innerHTML=x[3];
+_2('4').placeholder=x[4];
+_2('5').innerHTML=x[5];
+_2('6').innerHTML=x[6];
+_2('8').innerHTML=x[8];};
+_2(_0[3]).onclick=_3;
+_2(_0[4]).onclick=_4;
+addEventListener('load',_5);
+})();
+</script>
 </body>
-  </html>
+</html>
