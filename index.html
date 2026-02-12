@@ -1,360 +1,275 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de Script</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gerador de Código</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    body {
-      background: linear-gradient(135deg, #0a0a0a, #111, #0a0a0a);
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Inter',sans-serif;
+}
 
-    .container {
-      width: 100%;
-      max-width: 750px;
-      background: rgba(20, 20, 20, 0.95);
-      border: 1px solid rgba(0, 255, 0, 0.2);
-      border-radius: 15px;
-      padding: 25px;
-      box-shadow: 0px 0px 20px rgba(0, 255, 0, 0.2);
-    }
+body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  padding:20px;
+}
 
-    h1 {
-      text-align: center;
-      color: lime;
-      margin-bottom: 20px;
-      font-size: 28px;
-    }
+.container{
+  width:100%;
+  max-width:800px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.1);
+  animation:fadeIn .4s ease;
+}
 
-    label {
-      font-size: 15px;
-      margin-top: 15px;
-      display: block;
-      color: #ddd;
-    }
+h1{
+  text-align:center;
+  margin-bottom:25px;
+  font-size:26px;
+  font-weight:700;
+  background:linear-gradient(45deg,#00f5a0,#00d9f5);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
 
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: #0f0f0f;
-      color: white;
-      font-size: 15px;
-      outline: none;
-      transition: 0.2s;
-    }
+label{
+  display:block;
+  margin-top:15px;
+  font-size:14px;
+  color:#ccc;
+}
 
-    input:focus, textarea:focus {
-      border-color: lime;
-      box-shadow: 0px 0px 10px rgba(0,255,0,0.3);
-    }
+input,textarea{
+  width:100%;
+  margin-top:6px;
+  padding:12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(255,255,255,0.07);
+  color:white;
+  font-size:14px;
+  transition:.3s;
+}
 
-    textarea {
-      height: 260px;
-      resize: none;
-    }
+input:focus,textarea:focus{
+  border-color:#00f5a0;
+  box-shadow:0 0 15px rgba(0,245,160,0.3);
+  outline:none;
+}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 15px;
-      transition: 0.2s;
-      margin-top: 12px;
-    }
+textarea{
+  height:220px;
+  resize:none;
+}
 
-    .btn-gerar {
-      background: lime;
-      color: black;
-    }
+.section{
+  margin-top:20px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(0,0,0,0.3);
+  border:1px solid rgba(255,255,255,0.08);
+}
 
-    .btn-gerar:hover {
-      background: rgb(0, 200, 0);
-    }
+.section h2{
+  font-size:16px;
+  margin-bottom:10px;
+  color:#00f5a0;
+}
 
-    .btn-copiar {
-      background: #222;
-      color: lime;
-      border: 1px solid lime;
-    }
+.item{
+  display:flex;
+  gap:10px;
+  margin-top:10px;
+  animation:fadeIn .3s ease;
+}
 
-    .btn-copiar:hover {
-      background: lime;
-      color: black;
-    }
+.item input{
+  flex:1;
+}
 
-    .btn-limpar {
-      background: #222;
-      color: red;
-      border: 1px solid red;
-    }
+button{
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
 
-    .btn-limpar:hover {
-      background: red;
-      color: white;
-    }
+.btn-primary{
+  background:linear-gradient(45deg,#00f5a0,#00d9f5);
+  color:#000;
+}
 
-    .btn-add {
-      background: #222;
-      color: cyan;
-      border: 1px solid cyan;
-    }
+.btn-primary:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 20px rgba(0,245,160,0.5);
+}
 
-    .btn-add:hover {
-      background: cyan;
-      color: black;
-    }
+.btn-outline{
+  background:transparent;
+  border:1px solid #00f5a0;
+  color:#00f5a0;
+}
 
-    .msg {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 14px;
-      color: #aaa;
-    }
+.btn-outline:hover{
+  background:#00f5a0;
+  color:#000;
+}
 
-    footer {
-      margin-top: 15px;
-      text-align: center;
-      font-size: 13px;
-      color: rgba(255,255,255,0.4);
-    }
+.btn-danger{
+  background:transparent;
+  border:1px solid #ff4d4d;
+  color:#ff4d4d;
+}
 
-    .funcoes {
-      margin-top: 15px;
-      padding: 15px;
-      border: 1px solid rgba(0,255,0,0.2);
-      border-radius: 10px;
-      background: rgba(0,0,0,0.4);
-    }
+.btn-danger:hover{
+  background:#ff4d4d;
+  color:#fff;
+}
 
-    .funcoes h2 {
-      color: lime;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
+.grid-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:15px;
+}
 
-    .funcao-item {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
+.status{
+  text-align:center;
+  margin-top:15px;
+  font-size:13px;
+  opacity:.8;
+  min-height:18px;
+}
 
-    .funcao-item input {
-      flex: 1;
-      margin-top: 0;
-    }
+footer{
+  text-align:center;
+  margin-top:20px;
+  font-size:12px;
+  opacity:.4;
+}
 
-    .btn-remover {
-      width: 80px;
-      background: red;
-      color: white;
-      font-weight: bold;
-      border-radius: 10px;
-      border: none;
-      cursor: pointer;
-    }
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(10px);}
+  to{opacity:1; transform:translateY(0);}
+}
 
-    .btn-remover:hover {
-      background: darkred;
-    }
-  </style>
+@media(max-width:600px){
+  .grid-buttons{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
-
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <h1>⚡ Gerador de Script</h1>
+<h1>⚡ Gerador de Código</h1>
 
-    <label>Nome do Script:</label>
-    <input type="text" id="nomeScript" placeholder="Ex: Script do Kauan">
+<label>Título:</label>
+<input type="text" id="titulo" placeholder="Digite um título">
 
-    <label>Mensagem inicial (toast + print):</label>
-    <input type="text" id="msgInicio" placeholder="Ex: Bem-vindo ao script!">
+<label>Mensagem inicial:</label>
+<input type="text" id="mensagem" placeholder="Digite uma mensagem">
 
-    <div class="funcoes">
-      <h2>📌 Funções do Script</h2>
+<div class="section">
+  <h2>📌 Itens</h2>
+  <div id="lista"></div>
+  <button class="btn-outline" onclick="addItem()">➕ Adicionar Item</button>
+</div>
 
-      <div id="listaFuncoes"></div>
+<div class="grid-buttons">
+  <button class="btn-primary" onclick="gerar()">GERAR</button>
+  <button class="btn-danger" onclick="limpar()">LIMPAR</button>
+</div>
 
-      <button class="btn-add" onclick="adicionarFuncao()">➕ Adicionar Função</button>
-    </div>
+<label>Resultado:</label>
+<textarea id="resultado" readonly></textarea>
 
-    <button class="btn-gerar" onclick="gerarScript()">GERAR SCRIPT</button>
-    <button class="btn-limpar" onclick="limpar()">LIMPAR</button>
+<button class="btn-outline" style="width:100%;margin-top:10px;" onclick="copiar()">📋 COPIAR</button>
 
-    <label>Resultado:</label>
-    <textarea id="resultado" readonly></textarea>
+<div class="status" id="status"></div>
 
-    <button class="btn-copiar" onclick="copiar()">📋 COPIAR SCRIPT</button>
+<footer>Interface Profissional • 2026</footer>
 
-    <p class="msg" id="status">Adicione funções e gere seu script.</p>
+</div>
 
-    <footer>Feito por Kauan • Gerador Script</footer>
+<script>
+let contador=0;
 
-  </div>
+function addItem(){
+  contador++;
+  const div=document.createElement("div");
+  div.className="item";
+  div.innerHTML=`
+    <input type="text" placeholder="Item ${contador}">
+    <button class="btn-danger" onclick="this.parentElement.remove()">X</button>
+  `;
+  document.getElementById("lista").appendChild(div);
+  setStatus("Item adicionado","cyan");
+}
 
-  <script>
-    let contadorFuncoes = 0;
+function gerar(){
+  const titulo=document.getElementById("titulo").value.trim();
+  const msg=document.getElementById("mensagem").value.trim();
 
-    function adicionarFuncao() {
-      contadorFuncoes++;
+  if(!titulo || !msg){
+    setStatus("Preencha os campos obrigatórios","yellow");
+    return;
+  }
 
-      let div = document.createElement("div");
-      div.className = "funcao-item";
-      div.id = "funcaoItem" + contadorFuncoes;
+  let texto=`# ${titulo}\n\n${msg}\n\n`;
 
-      div.innerHTML = `
-        <input type="text" id="funcao${contadorFuncoes}" placeholder="Nome da Função ${contadorFuncoes} (Ex: Teleporte)">
-        <button class="btn-remover" onclick="removerFuncao(${contadorFuncoes})">X</button>
-      `;
+  document.querySelectorAll(".item input").forEach((el,i)=>{
+    if(el.value.trim())
+      texto+=`- ${el.value.trim()}\n`;
+  });
 
-      document.getElementById("listaFuncoes").appendChild(div);
+  document.getElementById("resultado").value=texto;
+  setStatus("Código gerado com sucesso","lime");
+}
 
-      document.getElementById("status").innerHTML = "✅ Função adicionada!";
-      document.getElementById("status").style.color = "cyan";
-    }
+function copiar(){
+  const txt=document.getElementById("resultado").value;
+  if(!txt){
+    setStatus("Nada para copiar","yellow");
+    return;
+  }
+  navigator.clipboard.writeText(txt);
+  setStatus("Copiado para área de transferência","lime");
+}
 
-    function removerFuncao(id) {
-      let item = document.getElementById("funcaoItem" + id);
-      if (item) item.remove();
+function limpar(){
+  document.getElementById("titulo").value="";
+  document.getElementById("mensagem").value="";
+  document.getElementById("resultado").value="";
+  document.getElementById("lista").innerHTML="";
+  contador=0;
+  setStatus("Tudo limpo","red");
+}
 
-      document.getElementById("status").innerHTML = "❌ Função removida!";
-      document.getElementById("status").style.color = "red";
-    }
-
-    function gerarScript() {
-      let nome = document.getElementById("nomeScript").value.trim();
-      let msg = document.getElementById("msgInicio").value.trim();
-
-      if (nome === "" || msg === "") {
-        document.getElementById("status").innerHTML = "⚠️ Preencha o nome do script e a mensagem!";
-        document.getElementById("status").style.color = "yellow";
-        return;
-      }
-
-      let funcoes = [];
-      for (let i = 1; i <= contadorFuncoes; i++) {
-        let campo = document.getElementById("funcao" + i);
-        if (campo) {
-          let nomeFuncao = campo.value.trim();
-          if (nomeFuncao === "") nomeFuncao = "Funcao_" + i;
-          funcoes.push(nomeFuncao);
-        }
-      }
-
-      if (funcoes.length === 0) {
-        document.getElementById("status").innerHTML = "⚠️ Adicione pelo menos 1 função!";
-        document.getElementById("status").style.color = "yellow";
-        return;
-      }
-
-      let scriptFinal = `-- ${nome}
--- Script gerado automaticamente
--- By Kauan 
-
-gg.toast("${msg}")
-print("${msg}")
-
-`;
-
-      // Criar funções
-      funcoes.forEach((f, index) => {
-        let nomeFormatado = f.replace(/\s+/g, "_");
-
-        scriptFinal += `
-function ${nomeFormatado}()
-  gg.alert("Função: ${f} ainda não configurada!")
-end
-`;
-      });
-
-      // Criar menu
-      scriptFinal += `
-function MENU()
-  local menu = gg.choice({
-`;
-
-      funcoes.forEach((f, index) => {
-        scriptFinal += `    "${index + 1}. ${f}",\n`;
-      });
-
-      scriptFinal += `    "❌ Sair"
-  }, nil, "📌 MENU DO SCRIPT")
-
-  if menu == nil then return end
-`;
-
-      funcoes.forEach((f, index) => {
-        let nomeFormatado = f.replace(/\s+/g, "_");
-        scriptFinal += `  if menu == ${index + 1} then ${nomeFormatado}() end\n`;
-      });
-
-      scriptFinal += `
-  if menu == ${funcoes.length + 1} then os.exit() end
-end
-
-while true do
-  if gg.isVisible(true) then
-    gg.setVisible(false)
-    MENU()
-  end
-end
-`;
-
-      document.getElementById("resultado").value = scriptFinal;
-
-      document.getElementById("status").innerHTML = "✅ Script gerado com sucesso!";
-      document.getElementById("status").style.color = "lime";
-    }
-
-    function copiar() {
-      let texto = document.getElementById("resultado").value;
-
-      if (texto.trim() === "") {
-        document.getElementById("status").innerHTML = "⚠️ Gere o script antes de copiar!";
-        document.getElementById("status").style.color = "yellow";
-        return;
-      }
-
-      navigator.clipboard.writeText(texto);
-      document.getElementById("status").innerHTML = "📋 Script copiado!";
-      document.getElementById("status").style.color = "lime";
-    }
-
-    function limpar() {
-      document.getElementById("nomeScript").value = "";
-      document.getElementById("msgInicio").value = "";
-      document.getElementById("resultado").value = "";
-      document.getElementById("listaFuncoes").innerHTML = "";
-      contadorFuncoes = 0;
-
-      document.getElementById("status").innerHTML = "🧹 Tudo limpo!";
-      document.getElementById("status").style.color = "red";
-    }
-
-    // Já começa com 1 função criada
-    adicionarFuncao();
-  </script>
+function setStatus(msg,color){
+  const s=document.getElementById("status");
+  s.innerText=msg;
+  s.style.color=color;
+}
+</script>
 
 </body>
 </html>
