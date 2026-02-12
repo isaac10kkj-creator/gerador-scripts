@@ -15,28 +15,29 @@ body {
     overflow-x: hidden;
 }
 
-/* 🌟 FUNDO COM TEXTO "KAUAN MODS" ANIMADO */
+/* 🌟 FUNDO COM TEXTO "KAUAN MODS" GIRANDO E PULSANDO */
 .fundo-texto {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(-30deg);
-    font-size: 200px; /* maior agora */
+    font-size: 250px; /* bem grande */
     color: red;
-    opacity: 0.05;   /* mais suave, quase transparente */
+    opacity: 0.15;    /* visível, mas não atrapalha */
     font-weight: bold;
     pointer-events: none;
     z-index: 0;
-    animation: girar 60s linear infinite; /* gira lentamente */
+    animation: girar 60s linear infinite, pulsar 2s ease-in-out infinite;
 }
 
 @keyframes girar {
-    0% {
-        transform: translate(-50%, -50%) rotate(-30deg);
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(330deg); /* gira completo */
-    }
+    0% { transform: translate(-50%, -50%) rotate(-30deg); }
+    100% { transform: translate(-50%, -50%) rotate(330deg); }
+}
+
+@keyframes pulsar {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.25; }
 }
 
 .container {
@@ -101,18 +102,9 @@ button:hover {
 }
 
 @keyframes piscar {
-    0% {
-        opacity: 1;
-        color: #ff3c3c;
-    }
-    50% {
-        opacity: 0.4;
-        color: #ffffff;
-    }
-    100% {
-        opacity: 1;
-        color: #ff0000;
-    }
+    0% { opacity: 1; color: #ff3c3c; }
+    50% { opacity: 0.4; color: #ffffff; }
+    100% { opacity: 1; color: #ff0000; }
 }
 </style>
 </head>
