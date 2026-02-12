@@ -1,2 +1,2 @@
-# gerador-scripts
-Gerador de Scripts
+# gerador-sensibilidades
+Gerador de Sensibilidades
