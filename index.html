@@ -63,6 +63,15 @@ button:hover {
     font-size: 15px;
     text-align: left;
 }
+
+/* Texto do Criador */
+.criador {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ff3c3c;
+    font-weight: bold;
+    opacity: 0.9;
+}
 </style>
 </head>
 
@@ -97,6 +106,10 @@ button:hover {
     <div class="resultado" id="resultado"></div>
 
     <button onclick="copiarTexto()">COPIAR</button>
+
+    <!-- Texto Criador -->
+    <p class="criador">Criador: Kauan Mods</p>
+
 </div>
 
 <script>
@@ -114,7 +127,6 @@ function gerarSensibilidade() {
 
     let geral, redDot, mira2x, mira4x, awm, dpi;
 
-    // Base até 200
     if(modelo === "fraco"){
         geral = 170; redDot = 160; mira2x = 150; mira4x = 140; awm = 110; dpi = 420;
     } 
@@ -125,7 +137,6 @@ function gerarSensibilidade() {
         geral = 190; redDot = 180; mira2x = 170; mira4x = 160; awm = 130; dpi = 520;
     }
 
-    // Ajuste FPS
     if(fps === "baixo"){
         geral -= 10;
         redDot -= 10;
@@ -135,7 +146,6 @@ function gerarSensibilidade() {
         redDot += 5;
     }
 
-    // Ajuste Estilo
     if(estilo === "capa"){
         redDot += 10;
         mira2x += 10;
@@ -145,7 +155,6 @@ function gerarSensibilidade() {
         redDot -= 10;
     }
 
-    // Limitar até 200
     geral = limitar(geral);
     redDot = limitar(redDot);
     mira2x = limitar(mira2x);
