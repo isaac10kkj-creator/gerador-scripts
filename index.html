@@ -193,43 +193,373 @@ function criarLicenca(){
         validade,
         limite,
         dispositivos:[]
-    };
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Scripts - 3 Slots</title>
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --card: #11151f;
+      --text: #d1d9e6;
+      --accent: #00d4ff;
+      --green: #00c853;
+      --gray: #6b7280;
+      --border: #1e293b;
+      --danger: #ef4444;
+    }
 
-    licencas.push(nova);
-    localStorage.setItem("licencasPro",JSON.stringify(licencas));
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+      line-height: 1.5;
+    }
 
-    atualizarTabela();
-}
+    .container { max-width: 920px; margin: 0 auto; }
 
-/* ATUALIZAR TABELA */
-function atualizarTabela(){
+    .header {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
 
-    let tbody = document.getElementById("listaLicencas");
-    tbody.innerHTML="";
+    .user-info {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+    }
 
-    licencas.forEach((l,index)=>{
+    .days {
+      color: var(--accent);
+      font-weight: bold;
+    }
 
-        tbody.innerHTML += `
-        <tr>
-        <td>${l.usuario}</td>
-        <td>${l.senha}</td>
-        <td>${l.validade}</td>
-        <td>${l.dispositivos.length}/${l.limite}</td>
-        <td>
-        <button class="btn-danger" onclick="remover(${index})">Excluir</button>
-        </td>
-        </tr>
-        `;
+    .progress {
+      height: 8px;
+      background: #1e293b;
+      border-radius: 4px;
+      margin: 8px 0;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 48%; /* 16/33 ≈ 48% */
+      background: linear-gradient(90deg, #00d4ff, #00c853);
+    }
+
+    .menu-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin: 16px 0;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      background: #1e293b;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+
+    .btn:hover { background: #334155; }
+    .btn.active { background: var(--accent); color: #000; }
+
+    .section {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .info-text {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .slots-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .slot {
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .slot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .slot-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .status {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-ativo { background: #065f46; color: #6ee7b7; }
+
+    .upload-info {
+      color: var(--gray);
+      font-size: 0.85rem;
+      margin: 8px 0;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      margin: 12px 0;
+    }
+
+    .upload-area:hover {
+      border-color: var(--accent);
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    .choose-btn {
+      background: var(--accent);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .file-name {
+      color: var(--gray);
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 12px 0;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 1rem;
+    }
+
+    input[type="text"]::placeholder { color: #475569; }
+
+    .actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-save   { background: var(--green); color: white; }
+    .btn-clear  { background: var(--danger); color: white; }
+
+    @media (max-width: 600px) {
+      .menu-buttons { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <div class="user-info">
+      <strong>123456</strong> <span style="color:#94a3b8">(reseller)</span>
+    </div>
+    <div>Dias restantes: <span class="days">16 / 33</span></div>
+    <div class="progress">
+      <div class="progress-bar"></div>
+    </div>
+
+    <div class="menu-buttons">
+      <button class="btn">Keys</button>
+      <button class="btn active">Scripts</button>
+      <button class="btn">Resgatar Código</button>
+      <button class="btn">Revendedores</button>
+      <button class="btn">Logs</button>
+      <button class="btn">Sair</button>
+    </div>
+
+    <div style="margin-top:16px;">
+      <button class="btn">≡ Menu</button>
+      <button class="btn">▶ Tema</button>
+      <button class="btn">❄️ Neve</button>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Seus Scripts (3 slots)</h2>
+    <div class="info-text">
+      Upload até 3 arquivos (máx 15MB).
+    </div>
+
+    <div class="slots-grid" id="slotsContainer"></div>
+  </div>
+
+</div>
+
+<script>
+// Configuração
+const MAX_SLOTS = 3;
+const MAX_SIZE_MB = 15;
+const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+let slots = JSON.parse(localStorage.getItem("scriptSlots")) || Array(MAX_SLOTS).fill(null).map(() => ({
+  fileName: null,
+  fileData: null,       // base64
+  fileSize: 0,
+  uploadDate: null,
+  title: ""
+}));
+
+function renderSlots() {
+  const container = document.getElementById("slotsContainer");
+  container.innerHTML = "";
+
+  slots.forEach((slot, index) => {
+    const isActive = !!slot.fileName;
+    const dateStr = slot.uploadDate ? new Date(slot.uploadDate).toLocaleString("pt-BR") : "-";
+
+    const div = document.createElement("div");
+    div.className = "slot";
+    div.innerHTML = `
+      <div class="slot-header">
+        <div class="slot-title">Slot ${index + 1}</div>
+        <div class="status ${isActive ? 'status-ativo' : ''}">
+          ${isActive ? 'ativo' : 'vazio'}
+        </div>
+      </div>
+
+      ${slot.fileName ? `
+        <div class="upload-info">
+          • ${slot.fileName}<br>
+          Upload: ${dateStr}<br>
+          Tamanho: ${(slot.fileSize / 1024 / 1024).toFixed(2)} MB
+        </div>
+      ` : ''}
+
+      <label class="upload-area" for="file${index}">
+        <div class="choose-btn">Escolher arquivo</div>
+        <div class="file-name" id="fileName${index}">
+          ${slot.fileName || "Nenhum arquivo escolhido"}
+        </div>
+      </label>
+
+      <input type="file" id="file${index}" accept=".html,.htm,.js,.css,.txt" hidden>
+
+      <input type="text" placeholder="Título (opcional)" value="${slot.title || ''}"
+             id="title\( {index}" oninput="updateTitle( \){index}, this.value)">
+
+      <div class="actions">
+        \( {isActive ? `<button class="btn-save" disabled>Salvo</button>` : `<button class="btn-save" onclick="saveSlot( \){index})">Salvar</button>`}
+        \( {isActive ? `<button class="btn-clear" onclick="clearSlot( \){index})">Limpar</button>` : ''}
+      </div>
+    `;
+
+    container.appendChild(div);
+
+    // Evento de upload
+    document.getElementById(`file${index}`).addEventListener("change", (e) => {
+      handleFileSelect(e, index);
     });
+  });
 }
 
-/* REMOVER */
-function remover(i){
-    licencas.splice(i,1);
-    localStorage.setItem("licencasPro",JSON.stringify(licencas));
-    atualizarTabela();
+function handleFileSelect(e, index) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (file.size > MAX_SIZE_BYTES) {
+    alert(`O arquivo excede o limite de ${MAX_SIZE_MB}MB!`);
+    e.target.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    slots[index].fileName   = file.name;
+    slots[index].fileData   = ev.target.result; // data:url (base64)
+    slots[index].fileSize   = file.size;
+    slots[index].uploadDate = new Date().toISOString();
+
+    document.getElementById(`fileName${index}`).textContent = file.name;
+    renderSlots(); // atualiza visual
+  };
+  reader.readAsDataURL(file);
 }
 
+function updateTitle(index, value) {
+  slots[index].title = value.trim();
+  // Não salva automaticamente — só ao clicar em Salvar
+}
+
+function saveSlot(index) {
+  if (!slots[index].fileName) {
+    alert("Escolha um arquivo primeiro!");
+    return;
+  }
+  localStorage.setItem("scriptSlots", JSON.stringify(slots));
+  alert(`Slot ${index+1} salvo com sucesso!`);
+  renderSlots();
+}
+
+function clearSlot(index) {
+  if (!confirm("Deseja limpar este slot?")) return;
+
+  slots[index] = {
+    fileName: null,
+    fileData: null,
+    fileSize: 0,
+    uploadDate: null,
+    title: ""
+  };
+  localStorage.setItem("scriptSlots", JSON.stringify(slots));
+  renderSlots();
+}
+
+// Inicializa
+renderSlots();
 </script>
 
 </body>
