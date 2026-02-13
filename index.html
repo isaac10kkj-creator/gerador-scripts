@@ -16,7 +16,7 @@ body {
     position: relative;
 }
 
-/* 🌟 FUNDO COM BOLINHAS ANIMADAS */
+/* 🌟 FUNDO ANIMADO */
 .bolinha {
     position: absolute;
     width: 12px; 
@@ -85,9 +85,8 @@ button:hover {
     text-align: left;
 }
 
-/* 🔥 CRIADOR E INSTAGRAM PISCANDO */
 .criador {
-    margin-top: 20px;
+    margin-top: 15px;
     font-size: 15px;
     font-weight: bold;
     animation: piscar 1s infinite;
@@ -104,7 +103,6 @@ button:hover {
 
 <body>
 
-<!-- 🌟 BOLINHAS DE FUNDO -->
 <script>
 const NUM_BOLINHAS = 30;
 for(let i=0; i<NUM_BOLINHAS; i++){
@@ -141,16 +139,26 @@ for(let i=0; i<NUM_BOLINHAS; i++){
         <option value="preciso">Preciso</option>
     </select>
 
-    <button onclick="gerarSensibilidade()">GERAR SENSI</button>
+    <button onclick="gerarSensibilidade()">GERAR SENSI PERSONALIZADA</button>
+
+    <!-- NOVA ÁREA DE FAMOSOS -->
+    <label>Sensi de Famosos</label>
+    <select id="famoso">
+        <option value="">Selecionar Jogador</option>
+        <option value="nobru">Nobru</option>
+        <option value="cerol">Cerol</option>
+        <option value="two9">Two9</option>
+        <option value="babi">Babi</option>
+    </select>
+
+    <button onclick="gerarFamoso()">GERAR SENSI DO FAMOSO</button>
 
     <div class="resultado" id="resultado"></div>
 
     <button onclick="copiarTexto()">COPIAR</button>
 
-    <!-- 🔥 TEXTO PISCANDO -->
     <p class="criador">Criador: Kauan Mods</p>
     <p class="criador">Instagram: @kauan_offline7</p>
-
 </div>
 
 <script>
@@ -201,6 +209,29 @@ function gerarSensibilidade() {
     mira4x = limitar(mira4x);
     awm = limitar(awm);
 
+    mostrarResultado(geral, redDot, mira2x, mira4x, awm, dpi);
+}
+
+function gerarFamoso() {
+    let famoso = document.getElementById("famoso").value;
+
+    if(!famoso){
+        alert("Selecione um jogador!");
+        return;
+    }
+
+    const sensis = {
+        nobru: [195,185,175,165,135,540],
+        cerol: [185,175,165,155,125,500],
+        two9: [190,180,170,160,130,520],
+        babi: [180,170,160,150,120,480]
+    };
+
+    let dados = sensis[famoso];
+    mostrarResultado(...dados);
+}
+
+function mostrarResultado(geral, redDot, mira2x, mira4x, awm, dpi){
     let resultado = `
     🎯 Geral: ${geral}<br>
     🔴 Red Dot: ${redDot}<br>
